@@ -1,0 +1,40 @@
+import * as C from './styles';
+import { useState,KeyboardEvent,MouseEvent } from 'react';
+
+type Props = {
+  onEnter: (taskName:string) => void
+}
+
+export const AddArea = ({onEnter}: Props) => {
+
+  const [inputText, setInputText] = useState('');
+
+  const handleKeyUp = (e:KeyboardEvent) =>{
+      if(e.code === 'Enter' && inputText !== ''){
+        onEnter(inputText);
+        setInputText('');
+      }
+  }
+
+  const handleClick = (e:MouseEvent) =>{
+    console.log(e.type);
+    if(e.type === 'click' && inputText !== ''){
+      onEnter(inputText);
+      setInputText('');
+    }
+  }
+
+  return(
+    <C.Container>
+      <div className='image' onClick={handleClick}>➕</div>
+      <input
+        type="text"
+        placeholder="Adicione uma nova tarefa"
+        value={inputText}
+        onChange={e=> setInputText(e.target.value)}
+        onKeyUp={handleKeyUp}
+      />
+    </C.Container>
+
+  );
+}
